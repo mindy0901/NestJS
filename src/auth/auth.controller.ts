@@ -1,6 +1,6 @@
-import { SignupDto, SigninDto } from './dto/auth.dto';
-import { Body, Controller, Get, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { SignupDto, SigninDto, RefreshTokenDto } from './dto/auth.dto';
+import { Body, Controller, HttpCode, Post, Res } from '@nestjs/common';
+import { Response } from 'express';
 
 import { AuthService } from './auth.service';
 import { SkipAuth } from './decorator';
@@ -21,9 +21,9 @@ export class AuthController {
         return this.authService.signin(form, res);
     }
 
-    @Get('refresh_token')
+    @Post('refresh_token')
     @HttpCode(200)
-    refresh_token(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-        return this.authService.refreshToken(req, res);
+    refresh_token(@Body() data: RefreshTokenDto, @Res({ passthrough: true }) res: Response) {
+        return this.authService.refreshToken(data, res);
     }
 }

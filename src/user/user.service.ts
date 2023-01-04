@@ -7,6 +7,7 @@ import {
     NotFoundException,
     UnauthorizedException,
 } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { AbilityFactory, Action } from 'src/ability/ability.factory';
 import { RequestUser, UpdateUserForm } from 'src/types';
 import { PrismaService } from '../prisma/prisma.service';
@@ -15,7 +16,8 @@ import { PrismaService } from '../prisma/prisma.service';
 export class UserService {
     constructor(private prisma: PrismaService, private abilityFactory: AbilityFactory) {}
 
-    getUsers = async () => {
+    getUsers = async (req: Request, res: Response) => {
+        console.log(req.cookies.refresh_token);
         try {
             const users = await this.prisma.user.findMany({
                 orderBy: {

@@ -22,3 +22,8 @@ export type UserAccessToken = Pick<User, 'id' | 'role'> & {
     iat: number;
     exp: number;
 };
+
+export type UserRefreshToken = Pick<User, 'id' | 'role'> & {
+    iat: number;
+    exp: number;
+};

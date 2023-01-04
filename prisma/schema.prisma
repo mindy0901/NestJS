@@ -12,8 +12,8 @@ datasource db {
 
 model Post {
     id        Int      @id @default(autoincrement())
-    title     String   @db.VarChar(255)
-    content   String?
+    title     String
+    content   String
     isPublish Boolean  @default(false)
     author    User     @relation(fields: [authorId], references: [id])
     authorId  Int
@@ -22,14 +22,15 @@ model Post {
 }
 
 model User {
-    id        Int      @id @default(autoincrement())
-    username  String   @unique
-    email     String   @unique
-    password  String
-    posts     Post[]
-    role      Role     @default(USER)
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id            Int      @id @default(autoincrement())
+    username      String   @unique
+    email         String   @unique
+    password      String
+    posts         Post[]
+    role          Role     @default(USER)
+    refresh_token String   @default("")
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
 }
 
 enum Role {

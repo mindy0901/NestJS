@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put, Req, Res, UseGuards } from '@nestjs/common';
 
 import { UserService } from './user.service';
 import { CheckAbilites } from 'src/ability/ability.decorator';
@@ -7,6 +7,7 @@ import { GetUser } from 'src/auth/decorator';
 import { RequestUser } from 'src/types';
 import { ReadUser, ReadUsers } from 'src/ability/abilitiesHandler/user';
 import { EditUserDto } from './dto';
+import { Request, Response } from 'express';
 
 @Controller('api/users')
 export class UserController {
@@ -16,8 +17,8 @@ export class UserController {
     @Get()
     @UseGuards(AbilitiesGuard)
     @CheckAbilites(new ReadUsers())
-    getUsers() {
-        return this.userService.getUsers();
+    getUsers(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+        return this.userService.getUsers(req, res);
     }
 
     // GET ME
